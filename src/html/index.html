@@ -7,7 +7,8 @@
   <body>
     <a-scene>
       <a-assets>
-        <a-mixin id="grassy" material="color: green"></a-mixin>
+        <a-mixin id="grass" material="color: #526F35"></a-mixin>
+        <a-mixin id="greener-grass" material="color: #55AE3A"></a-mixin>
         <a-mixin id="asphalt" material="color: gray"></a-mixin>
 
         <a-mixin id="hill"
@@ -40,9 +41,9 @@
 
       <a-entity mixin="sky"></a-entity>
 
-      <a-entity mixin="grassy ground" ></a-entity>
-      <a-entity mixin="grassy hill" position="0 0 -20"></a-entity>
-      <a-entity mixin="grassy hill" position="0 0 20"></a-entity>
+      <a-entity mixin="grass ground" ></a-entity>
+      <a-entity mixin="greener-grass hill" position="0 0 -20"></a-entity>
+      <a-entity mixin="grass hill" position="0 0 20"></a-entity>
       <a-entity mixin="asphalt road"></a-entity>
     </a-scene>
   </body>
