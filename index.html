@@ -3,8 +3,48 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Hello Vrogger!</title>
-  </head>
+  <script type="text/javascript" src="javascript/application.js"></script></head>
   <body>
-    Hello Rudy!!
-  <script type="text/javascript" src="javascript/application.js"></script></body>
+    <a-scene>
+      <a-assets>
+        <a-mixin id="grass" material="color: #526F35"></a-mixin>
+        <a-mixin id="greener-grass" material="color: #55AE3A"></a-mixin>
+        <a-mixin id="asphalt" material="color: gray"></a-mixin>
+
+        <a-mixin id="hill"
+          static-body
+          geometry="primitive: box; height: 10; width: 100; depth: 10"
+          rotation="-45 0 0">
+        </a-mixin>
+        <a-mixin id="ground"
+          static-body
+          geometry="primitive: box; height: 0.1; width: 100; depth: 100">
+        </a-mixin>
+        <a-mixin id="road"
+          geometry="primitive: plane; height: 15; width: 100"
+          rotation="-90 0 0"
+          position="0 0.1 0">
+          <a-entity mixin="lane"></a-entity>
+        </a-mixin>
+        <a-mixin id="sky"
+          geometry="primitive: sphere; radius: 5000"
+          material="shader: flat; color: #7EC0EE"
+          scale="-1 1 1">
+        </a-mixin>
+        <a-mixin id="car"
+          dynamic-body
+          geometry="primitive: box; height: 1.5; width: 2; depth: 4.5">
+        </a-mixin>
+      </a-assets>
+
+      <a-entity camera universal-controls position="0 1 0"></a-entity>
+
+      <a-entity mixin="sky"></a-entity>
+
+      <a-entity mixin="grass ground" ></a-entity>
+      <a-entity mixin="greener-grass hill" position="0 0 -20"></a-entity>
+      <a-entity mixin="grass hill" position="0 0 20"></a-entity>
+      <a-entity mixin="asphalt road"></a-entity>
+    </a-scene>
+  </body>
 </html>
