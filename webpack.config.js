@@ -1,12 +1,13 @@
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    application: ['./src/javascript/client']
+    application: ['./src/javascript/client'],
   },
 
   output: {
     filename: 'javascript/[name].js',
-    path: './build/client/'
+    path: './build/client/',
   },
 
   resolve: {
@@ -19,5 +20,9 @@ module.exports = {
     ]
   },
 
-  devtool: 'source-map'
-}
+  devtool: 'source-map',
+
+  plugins: [new HtmlWebpackPlugin({
+    template: 'src/html/index.html',
+  })],
+};

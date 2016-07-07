@@ -1,0 +1,15 @@
+{
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "comma-dangle": [2, "only-multiline"],
+    "semi": [2, always],
+    "no-unused-vars": [2, { "argsIgnorePattern": "^_" }]
+  },
+  "globals": {
+    "module": true
+  }
+}

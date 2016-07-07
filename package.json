@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src || exit 0",
+    "serve": "webpack-dev-server --content-base build/client --inline",
     "build": "webpack"
   },
   "author": "",
@@ -15,6 +17,9 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
-    "webpack": "^1.13.1"
+    "eslint": "^3.0.1",
+    "html-webpack-plugin": "^2.22.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }
