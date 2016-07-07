@@ -1,0 +1,19 @@
+{
+  "name": "vrogger",
+  "version": "0.0.1",
+  "description": "vr frogger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aframe": "^0.2.0",
+    "aframe-extras": "^1.17.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "webpack": "^1.13.1"
+  }
+}
