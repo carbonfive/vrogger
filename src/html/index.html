@@ -10,34 +10,57 @@
         <a-mixin id="grass" material="color: #526F35"></a-mixin>
         <a-mixin id="greener-grass" material="color: #55AE3A"></a-mixin>
         <a-mixin id="asphalt" material="color: gray"></a-mixin>
+        <a-mixin id="yellow" material="color: yellow"></a-mixin>
 
         <a-mixin id="hill"
-          static-body
           geometry="primitive: box; height: 10; width: 100; depth: 10"
           rotation="-45 0 0">
         </a-mixin>
         <a-mixin id="ground"
-          static-body
           geometry="primitive: box; height: 0.1; width: 100; depth: 100">
         </a-mixin>
         <a-mixin id="road"
-          geometry="primitive: plane; height: 15; width: 100"
-          rotation="-90 0 0"
-          position="0 0.1 0">
-          <a-entity mixin="lane"></a-entity>
+          geometry="primitive: plane; height: 15; width: 100; translate: 0 0 0.1"
+          rotation="-90 0 0">
         </a-mixin>
         <a-mixin id="sky"
           geometry="primitive: sphere; radius: 5000"
           material="shader: flat; color: #7EC0EE"
           scale="-1 1 1">
         </a-mixin>
-        <a-mixin id="car"
-          dynamic-body
-          geometry="primitive: box; height: 1.5; width: 2; depth: 4.5">
+        <a-mixin id="divider"
+          geometry="primitive: plane; height: 0.1; width: 100; translate: 0 0 0.2"
+          rotation="-90 0 0">
+        </a-mixin>
+
+        <a-mixin id="car-1"
+          moving="speed: 0.5"
+          geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
+        </a-mixin>
+        <a-mixin id="car-2"
+          moving="speed: 0.3"
+          geometry="primitive: box; height: 2.5; width: 4.5; depth: 2; translate: 0 1.25 0">
+        </a-mixin>
+        <a-mixin id="car-3"
+          moving="speed: 0.6"
+          geometry="primitive: box; height: 1.5; width: 4.5; depth: 2; translate: 0 0.75 0">
+        </a-mixin>
+        <a-mixin id="car-4"
+          moving="speed: 0.8"
+          geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
+        </a-mixin>
+        <a-mixin id="car-5"
+          moving="speed: 0.7"
+          geometry="primitive: box; height: 4.5; width: 20; depth: 2.5; translate: 0 2.25 0">
         </a-mixin>
       </a-assets>
 
-      <a-entity camera universal-controls position="0 1 0"></a-entity>
+      <a-entity
+        camera
+        look-controls
+        wasd-controls
+        position="0 1 10"
+        kinematic-body></a-entity>
 
       <a-entity mixin="sky"></a-entity>
 
@@ -45,6 +68,16 @@
       <a-entity mixin="greener-grass hill" position="0 0 -20"></a-entity>
       <a-entity mixin="grass hill" position="0 0 20"></a-entity>
       <a-entity mixin="asphalt road"></a-entity>
+
+      <a-entity position="-50 0 6" spawner="mixin: car-1"></a-entity>
+      <a-entity position="0 0 4.5" mixin="yellow divider"></a-entity>
+      <a-entity position="50 0 3" rotation="0 180 0" spawner="mixin: car-2"></a-entity>
+      <a-entity position="0 0 1.5" mixin="yellow divider"></a-entity>
+      <a-entity position="-50 0 0" spawner="mixin: car-3"></a-entity>
+      <a-entity position="0 0 -1.5" mixin="yellow divider"></a-entity>
+      <a-entity position="50 0 -3" rotation="0 180 0" spawner="mixin: car-4"></a-entity>
+      <a-entity position="0 0 -4.5" mixin="yellow divider"></a-entity>
+      <a-entity position="-50 0 -6" spawner="mixin: car-5"></a-entity>
     </a-scene>
   </body>
 </html>
