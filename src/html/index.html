@@ -13,10 +13,13 @@
         <a-mixin id="yellow" material="color: yellow"></a-mixin>
 
         <a-mixin id="hill"
+          static-body
+          fix-physics
           geometry="primitive: box; height: 10; width: 100; depth: 10"
           rotation="-45 0 0">
         </a-mixin>
         <a-mixin id="ground"
+          static-body
           geometry="primitive: box; height: 0.1; width: 100; depth: 100">
         </a-mixin>
         <a-mixin id="road"
@@ -34,22 +37,27 @@
         </a-mixin>
 
         <a-mixin id="car-1"
+          fix-physics
           moving="speed: 0.5"
           geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
         </a-mixin>
         <a-mixin id="car-2"
+          fix-physics
           moving="speed: 0.3"
           geometry="primitive: box; height: 2.5; width: 4.5; depth: 2; translate: 0 1.25 0">
         </a-mixin>
         <a-mixin id="car-3"
+          fix-physics
           moving="speed: 0.6"
           geometry="primitive: box; height: 1.5; width: 4.5; depth: 2; translate: 0 0.75 0">
         </a-mixin>
         <a-mixin id="car-4"
+          fix-physics
           moving="speed: 0.8"
           geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
         </a-mixin>
         <a-mixin id="car-5"
+          fix-physics
           moving="speed: 0.7"
           geometry="primitive: box; height: 4.5; width: 20; depth: 2.5; translate: 0 2.25 0">
         </a-mixin>
@@ -57,14 +65,15 @@
 
       <a-entity
         camera
-        look-controls
-        wasd-controls
-        position="0 1 10"
-        kinematic-body></a-entity>
+        keyboard-controls
+        universal-controls
+        kinematic-body
+        jump-ability
+        position="0 1 10"></a-entity>
 
       <a-entity mixin="sky"></a-entity>
 
-      <a-entity mixin="grass ground" ></a-entity>
+      <a-entity mixin="grass ground"></a-entity>
       <a-entity mixin="greener-grass hill" position="0 0 -20"></a-entity>
       <a-entity mixin="grass hill" position="0 0 20"></a-entity>
       <a-entity mixin="asphalt road"></a-entity>
