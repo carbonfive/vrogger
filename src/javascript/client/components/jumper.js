@@ -21,11 +21,6 @@ export default class Jumper extends Component {
     this.registerEvents(this.data.startOn, e => this.chargeJump(e));
     this.registerEvents(this.data.stopOn, e => this.jump(e));
 
-    this.el.sceneEl.addEventListener('enter-vr', e => {
-      document.addEventListener('touchstart', e => { this.el.emit('touch:Start', e) });
-      document.addEventListener('touchend', e => this.el.emit('touch:End', e));
-    });
-
     this.el.addEventListener('body-loaded', e => this.bodyLoaded(e));
   }
 
