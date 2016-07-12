@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src || exit 0",
-    "serve": "webpack-dev-server --content-base build/client --inline",
+    "serve": "webpack-dev-server --host 0.0.0.0 --content-base build/client --inline",
     "build": "webpack",
     "clean": "rm -rf build",
     "deploy": "npm run clean && npm run build && ghpages --path build/client"

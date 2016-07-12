@@ -20,7 +20,8 @@
         </a-mixin>
         <a-mixin id="ground"
           static-body
-          geometry="primitive: box; height: 0.1; width: 100; depth: 100">
+          fix-physics
+          geometry="primitive: box; height: 100; width: 100; depth: 100; translate: 0 -50 0">
         </a-mixin>
         <a-mixin id="road"
           geometry="primitive: plane; height: 15; width: 100; translate: 0 0 0.1"
@@ -63,13 +64,15 @@
         </a-mixin>
       </a-assets>
 
-      <a-entity
-        camera
+      <a-box
+        opacity="0"
+        dynamic-body
+        jumper="using: #camera"
         keyboard-controls
-        universal-controls
-        kinematic-body
-        jump-ability
-        position="0 1 10"></a-entity>
+        height="1.5"
+        position="0 1.5 5">
+        <a-camera id="camera"></a-camera>
+      </a-box>
 
       <a-entity mixin="sky"></a-entity>
 
