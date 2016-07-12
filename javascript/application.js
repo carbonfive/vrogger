@@ -67,6 +67,10 @@
 	
 	__webpack_require__(52);
 	
+	__webpack_require__(53);
+	
+	__webpack_require__(54);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_aframeExtras2.default.registerAll(_aframe2.default);
@@ -82743,6 +82747,211 @@
 	
 	
 	Spawner.register();
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _component = __webpack_require__(50);
+	
+	var _component2 = _interopRequireDefault(_component);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Jumper = function (_Component) {
+	  _inherits(Jumper, _Component);
+	
+	  function Jumper() {
+	    _classCallCheck(this, Jumper);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Jumper).apply(this, arguments));
+	  }
+	
+	  _createClass(Jumper, [{
+	    key: 'init',
+	    value: function init() {
+	      var _this2 = this;
+	
+	      this.timestamp = 0;
+	      this.charging = false;
+	      this.bindings = [];
+	      this.height = 0;
+	
+	      this.registerEvents(this.data.startOn, function (e) {
+	        return _this2.chargeJump(e);
+	      });
+	      this.registerEvents(this.data.stopOn, function (e) {
+	        return _this2.jump(e);
+	      });
+	
+	      this.el.addEventListener('body-loaded', function (e) {
+	        return _this2.bodyLoaded(e);
+	      });
+	    }
+	  }, {
+	    key: 'bodyLoaded',
+	    value: function bodyLoaded(event) {
+	      this.body = event.detail.body;
+	      this.body.fixedRotation = true;
+	      this.body.updateMassProperties();
+	      var physics = this.el.sceneEl.systems.physics;
+	      physics.removeBody(this.body);
+	      physics.addBody(this.body);
+	
+	      this.height = this.el.components['geometry'].data.height;
+	    }
+	  }, {
+	    key: 'remove',
+	    value: function remove() {
+	      var _this3 = this;
+	
+	      var events = this.data.startOn.split(' ').concat(this.data.stopOn.split(' '));
+	      events.forEach(function (event) {
+	        return document.removeEventListener(event, _this3.bindings[event]);
+	      });
+	    }
+	  }, {
+	    key: 'registerEvents',
+	    value: function registerEvents(events, method) {
+	      var _this4 = this;
+	
+	      events.split(' ').forEach(function (event) {
+	        _this4.bindings[event] = document.addEventListener(event, function (e) {
+	          return method(e);
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'chargeJump',
+	    value: function chargeJump() {
+	      if (this.charging) return;
+	      this.timestamp = event.timeStamp;
+	      this.charging = true;
+	    }
+	  }, {
+	    key: 'jump',
+	    value: function jump(event) {
+	      this.charging = false;
+	      if (this.canJump() != true) return;
+	
+	      var d = Math.min(event.timeStamp - this.timestamp, this.data.chargingTime);
+	      var p = d / this.data.chargingTime;
+	      var power = p * (this.data.max - this.data.min) + this.data.min;
+	
+	      var element = this.data.using == 'this' ? this.el : document.querySelector(this.data.using);
+	      var object = element.object3D;
+	
+	      var force = new THREE.Vector3(0, 1000, 0);
+	      force.applyQuaternion(object.quaternion);
+	      force.multiplyScalar(power);
+	
+	      var point = new CANNON.Vec3(0, 0, 0);
+	      this.body.applyLocalForce(force, point);
+	    }
+	  }, {
+	    key: 'canJump',
+	    value: function canJump() {
+	      var world = this.el.sceneEl.systems.physics.world;
+	
+	      var from = new CANNON.Vec3();
+	      from.copy(this.body.position);
+	
+	      var to = new CANNON.Vec3();
+	      to.copy(from);
+	      to.y -= this.height / 2 + 0.1;
+	
+	      var ray = new CANNON.Ray(from, to);
+	      return ray.intersectWorld(world, { skipBackfaces: true });
+	    }
+	  }]);
+	
+	  return Jumper;
+	}(_component2.default);
+	
+	Jumper.dependencies = ['velocity', 'geometry'];
+	Jumper.schema = {
+	  using: { default: 'this' },
+	  startOn: { default: 'keydown:Space touch:Start' },
+	  stopOn: { default: 'keyup:Space touch:End' },
+	  min: { default: 1 },
+	  max: { default: 5 },
+	  chargingTime: { default: 3000 }
+	};
+	exports.default = Jumper;
+	
+	
+	Jumper.register();
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _component = __webpack_require__(50);
+	
+	var _component2 = _interopRequireDefault(_component);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TouchControls = function (_Component) {
+	  _inherits(TouchControls, _Component);
+	
+	  function TouchControls() {
+	    _classCallCheck(this, TouchControls);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TouchControls).apply(this, arguments));
+	  }
+	
+	  _createClass(TouchControls, [{
+	    key: 'init',
+	    value: function init() {
+	      var _this2 = this;
+	
+	      this.el.sceneEl.addEventListener('enter-vr', function (e) {
+	        document.addEventListener('touchstart', function (e) {
+	          _this2.el.emit('touch:Start', e);
+	        });
+	        document.addEventListener('touchend', function (e) {
+	          return _this2.el.emit('touch:End', e);
+	        });
+	      });
+	    }
+	  }]);
+	
+	  return TouchControls;
+	}(_component2.default);
+	
+	exports.default = TouchControls;
+	
+	
+	TouchControls.register();
 
 /***/ }
 /******/ ]);
