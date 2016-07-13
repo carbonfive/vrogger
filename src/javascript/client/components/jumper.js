@@ -1,7 +1,7 @@
 import Component from '../core/component';
 
 export default class Jumper extends Component {
-  static dependencies = ['velocity', 'geometry']
+  static dependencies = ['geometry']
 
   static schema = {
     using: { default: 'this' },
