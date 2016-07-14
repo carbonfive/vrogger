@@ -16,9 +16,6 @@ export default class FixedRotation extends Component {
     this.body = body;
     this.body.fixedRotation = true;
     this.body.updateMassProperties();
-    // const physics = this.el.sceneEl.systems.physics;
-    // physics.removeBody(this.body);
-    // physics.addBody(this.body);
   }
 }
 
