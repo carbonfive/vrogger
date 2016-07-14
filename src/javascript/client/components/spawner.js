@@ -4,6 +4,8 @@ export default class Spawner extends Component {
   static schema = {
     timeout: { default: 3000 },
     mixin: { default: '' },
+    tag: { default: 'a-entity' },
+    enabled: { default: true },
   }
 
   init() {
@@ -11,20 +13,20 @@ export default class Spawner extends Component {
   }
 
   spawn() {
-    const el = this.el;
-    const scene = el.sceneEl;
+    if (!this.data.enabled) return;
 
-    const matrixWorld = el.object3D.matrixWorld;
-    const rotation = el.getAttribute('rotation') || { x: 0, y: 0, z: 0 };
-    const position = new THREE.Vector3;
-    position.setFromMatrixPosition(matrixWorld);
+    const object = this.el.object3D;
 
-    const entity = document.createElement('a-entity');
+    const position = object.getWorldPosition();
+    const vector = object.getWorldRotation().toVector3();
+    const rotation = vector.multiplyScalar(180 / Math.PI);
+
+    const entity = document.createElement(this.data.tag);
     entity.setAttribute('position', position);
-    entity.setAttribute('mixin', this.data.mixin);
     entity.setAttribute('rotation', rotation);
+    entity.setAttribute('mixin', this.data.mixin);
 
-    scene.appendChild(entity);
+    this.el.sceneEl.appendChild(entity);
   }
 }
 
