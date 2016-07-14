@@ -1,88 +1,96 @@
 import Component from '../core/component';
 
+function scale(value, cap, min, max) {
+  const clamped = Math.min(value, cap);
+  const percent = (clamped / cap);
+  return percent * (max - min) + min;
+}
+
 export default class Jumper extends Component {
-  static dependencies = ['velocity', 'geometry']
+  static dependencies = ['geometry']
 
   static schema = {
-    using: { default: 'this' },
-    startOn: { default: 'keydown:Space touch:Start' },
-    stopOn: { default: 'keyup:Space touch:End' },
+    enabled: { default: true },
+    startOn: { default: 'keydown:Space' },
+    jumpOn: { default: 'keyup:Space' },
     min: { default: 1 },
     max: { default: 5 },
-    chargingTime: { default: 3000 },
+    time: { default: 3000 },
+    rotationElement: { default: 'this' },
   }
 
   init() {
-    this.timestamp = 0;
-    this.charging = false;
+    this.isCharging = false;
     this.bindings = [];
-    this.height = 0;
+    this.event = null;
+    this.body = null;
 
-    this.registerEvents(this.data.startOn, e => this.chargeJump(e));
-    this.registerEvents(this.data.stopOn, e => this.jump(e));
-
-    this.el.addEventListener('body-loaded', e => this.bodyLoaded(e));
-  }
-
-  bodyLoaded(event) {
-    this.body = event.detail.body;
-    this.body.fixedRotation = true;
-    this.body.updateMassProperties();
-    const physics = this.el.sceneEl.systems.physics;
-    physics.removeBody(this.body);
-    physics.addBody(this.body);
-
-    this.height = this.el.components['geometry'].data.height;
+    this.initEvents();
   }
 
   remove() {
-    const events = this.data.startOn.split(' ').concat(this.data.stopOn.split(' '));
-    events.forEach(event => document.removeEventListener(event, this.bindings[event]));
-  }
-
-  registerEvents(events, method) {
-    events.split(' ').forEach(event => {
-      this.bindings[event] = document.addEventListener(event, e => method(e));
+    this.data.startOn.concat(this.data.jumpOn).split(' ').forEach(event => {
+      document.removeEventListener(event, this.bindings[event]);
     });
   }
 
-  chargeJump() {
-    if (this.charging) return;
-    this.timestamp = event.timeStamp;
-    this.charging = true;
+  initBody(body) {
+    this.body = body;
   }
 
-  jump(event) {
-    this.charging = false;
+  initEvents() {
+    this.registerEvents(this.data.startOn, e => this.startJump(e));
+    this.registerEvents(this.data.jumpOn, e => this.executeJump(e));
+    this.el.addEventListener('body-loaded', e => this.initBody(e.detail.body));
+  }
+
+  registerEvents(events, callback) {
+    events.split(' ').forEach(event => {
+      this.bindings[event] = document.addEventListener(event, e => callback(e));
+    });
+  }
+
+  startJump(event) {
+    if (this.isCharging) return;
+    this.isCharging = true;
+    this.event = event;
+  }
+
+  executeJump(event) {
+    this.isCharging = false;
     if (this.canJump() != true) return;
 
-    const d = Math.min(event.timeStamp - this.timestamp, this.data.chargingTime);
-    const p = (d / this.data.chargingTime);
-    const power = p * (this.data.max - this.data.min) + this.data.min;
+    const time = event.timeStamp - this.event.timeStamp;
+    const power = scale(time, this.data.time, this.data.min, this.data.max);
 
-    const element = this.data.using == 'this' ? this.el : document.querySelector(this.data.using);
+    const using = this.data.rotationElement;
+    const element = using == 'this' ? this.el : document.querySelector(using);
     const object = element.object3D;
 
     const force = new THREE.Vector3(0, 1000, 0);
     force.applyQuaternion(object.quaternion);
     force.multiplyScalar(power);
 
-    const point = new CANNON.Vec3(0, 0, 0);
-    this.body.applyLocalForce(force, point);
+    this.body.applyLocalForce(force, new CANNON.Vec3);
   }
 
   canJump() {
-    const world = this.el.sceneEl.systems.physics.world;
+    if (!this.data.enabled) return;
 
-    const from = new CANNON.Vec3;
-    from.copy(this.body.position);
+    const extents = this.body.shapes[0].halfExtents;
 
-    const to = new CANNON.Vec3;
-    to.copy(from);
-    to.y -= (this.height / 2 + 0.1);
+    const position = this.body.position.clone();
+    const bottom = position.clone().vsub({ x: 0, y: extents.y + 0.1, z: 0 });
+    const corner = { x: extents.x, y: 0, z: extents.z };
 
-    const ray = new CANNON.Ray(from, to);
-    return ray.intersectWorld(world, { skipBackfaces: true });
+    const rays = [
+      new CANNON.Ray(position, bottom.clone().vadd(corner)),
+      new CANNON.Ray(position, bottom.clone().vsub(corner)),
+    ];
+
+    return rays.some(ray => {
+      return ray.intersectWorld(this.body.world, { skipBackfaces: true });
+    });
   }
 }
 

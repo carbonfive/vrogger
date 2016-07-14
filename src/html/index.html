@@ -12,85 +12,123 @@
         <a-mixin id="asphalt" material="color: gray"></a-mixin>
         <a-mixin id="yellow" material="color: yellow"></a-mixin>
 
-        <a-mixin id="hill"
+        <a-mixin
+          id="car"
+          dynamic-body="mass: 1000"
+          fixed-rotation
+          fix-physics>
+        </a-mixin>
+        <a-mixin
+          id="car-1"
+          vehicle="speed: 30"
+          geometry="primitive: box; height: 1; width: 1.8; depth: 5; translate: 0 0.5 0">
+        </a-mixin>
+        <a-mixin
+          id="car-2"
+          vehicle="speed: 20"
+          geometry="primitive: box; height: 2.5; width: 2; depth: 4.5; translate: 0 1.25 0">
+        </a-mixin>
+        <a-mixin
+          id="car-3"
+          vehicle="speed: 35"
+          geometry="primitive: box; height: 1.5; width: 2; depth: 4.5; translate: 0 0.75 0">
+        </a-mixin>
+        <a-mixin
+          id="car-4"
+          vehicle="speed: 50"
+          geometry="primitive: box; height: 1; width: 1.8; depth: 5; translate: 0 0.5 0">
+        </a-mixin>
+        <a-mixin
+          id="car-5"
+          vehicle="speed: 40"
+          geometry="primitive: box; height: 4.5; width: 2.5; depth: 20; translate: 0 2.25 0">
+        </a-mixin>
+
+        <a-mixin
+          id="hill"
           static-body
           fix-physics
           geometry="primitive: box; height: 10; width: 100; depth: 10"
           rotation="-45 0 0">
         </a-mixin>
-        <a-mixin id="ground"
-          static-body
-          fix-physics
-          geometry="primitive: box; height: 100; width: 100; depth: 100; translate: 0 -50 0">
+        <a-mixin
+          id="road"
+          rotation="-90 0 0"
+          geometry="primitive: plane; height: 15; width: 100; translate: 0 0 0.1">
         </a-mixin>
-        <a-mixin id="road"
-          geometry="primitive: plane; height: 15; width: 100; translate: 0 0 0.1"
-          rotation="-90 0 0">
-        </a-mixin>
-        <a-mixin id="sky"
-          geometry="primitive: sphere; radius: 5000"
-          material="shader: flat; color: #7EC0EE"
-          scale="-1 1 1">
-        </a-mixin>
-        <a-mixin id="divider"
-          geometry="primitive: plane; height: 0.1; width: 100; translate: 0 0 0.2"
-          rotation="-90 0 0">
-        </a-mixin>
-
-        <a-mixin id="car-1"
-          fix-physics
-          moving="speed: 0.5"
-          geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
-        </a-mixin>
-        <a-mixin id="car-2"
-          fix-physics
-          moving="speed: 0.3"
-          geometry="primitive: box; height: 2.5; width: 4.5; depth: 2; translate: 0 1.25 0">
-        </a-mixin>
-        <a-mixin id="car-3"
-          fix-physics
-          moving="speed: 0.6"
-          geometry="primitive: box; height: 1.5; width: 4.5; depth: 2; translate: 0 0.75 0">
-        </a-mixin>
-        <a-mixin id="car-4"
-          fix-physics
-          moving="speed: 0.8"
-          geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
-        </a-mixin>
-        <a-mixin id="car-5"
-          fix-physics
-          moving="speed: 0.7"
-          geometry="primitive: box; height: 4.5; width: 20; depth: 2.5; translate: 0 2.25 0">
+        <a-mixin
+          id="divider"
+          rotation="-90 0 0"
+          geometry="primitive: plane; height: 0.1; width: 100; translate: 0 0 0.2">
         </a-mixin>
       </a-assets>
 
+      <a-sky color="#7EC0EE"></a-sky>
+
       <a-box
-        opacity="0"
-        dynamic-body
-        jumper="using: #camera"
-        keyboard-controls
-        touch-controls
-        height="1.5"
-        position="0 1.5 10">
-        <a-camera id="camera"></a-camera>
+        position="0 -50 0"
+        static-body
+        width="100"
+        depth="100"
+        height="100"
+        mixin="grass">
       </a-box>
-
-      <a-entity mixin="sky"></a-entity>
-
-      <a-entity mixin="grass ground"></a-entity>
-      <a-entity mixin="greener-grass hill" position="0 0 -20"></a-entity>
-      <a-entity mixin="grass hill" position="0 0 20"></a-entity>
+      <a-entity
+        position="0 0 20"
+        mixin="grass hill">
+      </a-entity>
+      <a-entity
+        position="0 0 -20"
+        mixin="greener-grass hill">
+      </a-entity>
       <a-entity mixin="asphalt road"></a-entity>
 
-      <a-entity position="-50 0 6" spawner="mixin: car-1"></a-entity>
-      <a-entity position="0 0 4.5" mixin="yellow divider"></a-entity>
-      <a-entity position="50 0 3" rotation="0 180 0" spawner="mixin: car-2"></a-entity>
-      <a-entity position="0 0 1.5" mixin="yellow divider"></a-entity>
-      <a-entity position="-50 0 0" spawner="mixin: car-3"></a-entity>
-      <a-entity position="0 0 -1.5" mixin="yellow divider"></a-entity>
-      <a-entity position="50 0 -3" rotation="0 180 0" spawner="mixin: car-4"></a-entity>
-      <a-entity position="0 0 -4.5" mixin="yellow divider"></a-entity>
-      <a-entity position="-50 0 -6" spawner="mixin: car-5"></a-entity>
+      <a-player position="0 2 12">
+        <a-entity camera look-controls></a-entity>
+      </a-player>
+
+      <a-entity
+        position="-50 0 6"
+        rotation="0 90 0"
+        spawner="mixin: car car-1">
+      </a-entity>
+      <a-entity
+        position="50 0 3"
+        rotation="0 -90 0"
+        spawner="mixin: car car-2">
+      </a-entity>
+      <a-entity
+        position="-50 0 0"
+        rotation="0 90 0"
+        spawner="mixin: car car-3">
+      </a-entity>
+      <a-entity
+        position="50 0 -3"
+        rotation="0 -90 0"
+        spawner="mixin: car car-4">
+      </a-entity>
+      <a-entity
+        position="-50 0 -6"
+        rotation="0 90 0"
+        spawner="mixin: car car-5">
+      </a-entity>
+
+      <a-entity
+        position="0 0 4.5"
+        mixin="yellow divider">
+      </a-entity>
+      <a-entity
+        position="0 0 1.5"
+        mixin="yellow divider">
+      </a-entity>
+      <a-entity
+        position="0 0 -1.5"
+        mixin="yellow divider">
+      </a-entity>
+      <a-entity
+        position="0 0 -4.5"
+        mixin="yellow divider">
+      </a-entity>
     </a-scene>
   </body>
 </html>
