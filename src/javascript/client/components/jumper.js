@@ -11,8 +11,8 @@ export default class Jumper extends Component {
 
   static schema = {
     enabled: { default: true },
-    startOn: { default: 'keydown:Space' },
-    jumpOn: { default: 'keyup:Space' },
+    startOn: { default: 'keydown:Space touch:Start' },
+    jumpOn: { default: 'keyup:Space touch:End' },
     min: { default: 1 },
     max: { default: 5 },
     time: { default: 3000 },
@@ -46,19 +46,20 @@ export default class Jumper extends Component {
 
   registerEvents(events, callback) {
     events.split(' ').forEach(event => {
-      this.bindings[event] = document.addEventListener(event, e => callback(e));
+      this.bindings[event] = e => callback(e);
+      document.addEventListener(event, this.bindings[event]);
     });
   }
 
   startJump(event) {
-    if (this.isCharging) return;
+    if (this.isCharging || !this.data.enabled) return;
     this.isCharging = true;
     this.event = event;
   }
 
   executeJump(event) {
-    this.isCharging = false;
     if (this.canJump() != true) return;
+    this.isCharging = false;
 
     const time = event.timeStamp - this.event.timeStamp;
     const power = scale(time, this.data.time, this.data.min, this.data.max);
@@ -75,7 +76,7 @@ export default class Jumper extends Component {
   }
 
   canJump() {
-    if (!this.data.enabled) return;
+    if (!this.data.enabled || !this.isCharging) return;
 
     const extents = this.body.shapes[0].halfExtents;
 
