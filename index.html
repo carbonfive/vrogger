@@ -5,92 +5,132 @@
     <title>Hello Vrogger!</title>
   <script type="text/javascript" src="javascript/application.js"></script></head>
   <body>
-    <a-scene>
+    <a-scene fog="type: linear; color: #FFFFFF; far: 70; near: 0">
       <a-assets>
-        <a-mixin id="grass" material="color: #526F35"></a-mixin>
-        <a-mixin id="greener-grass" material="color: #55AE3A"></a-mixin>
-        <a-mixin id="asphalt" material="color: gray"></a-mixin>
-        <a-mixin id="yellow" material="color: yellow"></a-mixin>
+        <a-mixin id="color" material="color: #FFFFFF; metalness: 0; roughness: 0.9"></a-mixin>
 
-        <a-mixin id="hill"
-          static-body
+        <a-asset-item id="model-landscape" src="/static/models/landscape.dae"></a-asset-item>
+        <a-asset-item id="model-tractor" src="/static/models/tractor.dae"></a-asset-item>
+        <a-asset-item id="model-sedan" src="/static/models/sedan.dae"></a-asset-item>
+        <a-asset-item id="model-light-rail" src="/static/models/light-rail.dae"></a-asset-item>
+        <a-asset-item id="model-freighter" src="/static/models/freighter.dae"></a-asset-item>
+        <a-asset-item id="model-racecar" src="/static/models/racecar.dae"></a-asset-item>
+
+        <a-mixin
+          id="car"
+          dynamic-body="mass: 1000"
+          fixed-rotation
           fix-physics
-          geometry="primitive: box; height: 10; width: 100; depth: 10"
-          rotation="-45 0 0">
+          fix-material>
         </a-mixin>
-        <a-mixin id="ground"
-          static-body
-          fix-physics
-          geometry="primitive: box; height: 100; width: 100; depth: 100; translate: 0 -50 0">
+        <a-mixin
+          id="tractor"
+          vehicle="speed: 10"
+          collada-model="#model-tractor"
+          transform-model="translate: -10.75 -2.75 -3"
+          geometry="primitive: box; height: 5; width: 3.5; depth: 5.5; translate: 0 2.5 0">
         </a-mixin>
-        <a-mixin id="road"
-          geometry="primitive: plane; height: 15; width: 100; translate: 0 0 0.1"
-          rotation="-90 0 0">
+        <a-mixin
+          id="sedan"
+          vehicle="speed: 20"
+          collada-model="#model-sedan"
+          transform-model="translate: -10.75 -1.6 4; rotation: 0 180 0"
+          geometry="primitive: box; height: 3; width: 3.5; depth: 8.5; translate: 0 1.5 0">
         </a-mixin>
-        <a-mixin id="sky"
-          geometry="primitive: sphere; radius: 5000"
-          material="shader: flat; color: #7EC0EE"
-          scale="-1 1 1">
+        <a-mixin
+          id="light-rail"
+          vehicle="speed: 14"
+          collada-model="#model-light-rail"
+          transform-model="translate: 0 -2 6.5"
+          geometry="primitive: box; height: 4; width: 3.5; depth: 32; translate: 0 2 0">
         </a-mixin>
-        <a-mixin id="divider"
-          geometry="primitive: plane; height: 0.1; width: 100; translate: 0 0 0.2"
-          rotation="-90 0 0">
+        <a-mixin
+          id="freighter"
+          vehicle="speed: 30"
+          collada-model="#model-freighter"
+          transform-model="translate: -5 -2.5 -4"
+          geometry="primitive: box; height: 4.5; width: 3; depth: 14; translate: 0 2.25 0">
+        </a-mixin>
+        <a-mixin
+          id="racecar"
+          vehicle="speed: 38"
+          collada-model="#model-racecar"
+          transform-model="translate: -5.25 -1.25 2; rotation: 0 180 0"
+          geometry="primitive: box; height: 2; width: 4; depth: 9.5; translate: 0 1 0">
         </a-mixin>
 
-        <a-mixin id="car-1"
-          fix-physics
-          moving="speed: 0.5"
-          geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
+        <a-mixin
+          id="wall"
+          static-body
+          material="opacity: 0">
         </a-mixin>
-        <a-mixin id="car-2"
-          fix-physics
-          moving="speed: 0.3"
-          geometry="primitive: box; height: 2.5; width: 4.5; depth: 2; translate: 0 1.25 0">
-        </a-mixin>
-        <a-mixin id="car-3"
-          fix-physics
-          moving="speed: 0.6"
-          geometry="primitive: box; height: 1.5; width: 4.5; depth: 2; translate: 0 0.75 0">
-        </a-mixin>
-        <a-mixin id="car-4"
-          fix-physics
-          moving="speed: 0.8"
-          geometry="primitive: box; height: 1; width: 5; depth: 1.8; translate: 0 0.5 0">
-        </a-mixin>
-        <a-mixin id="car-5"
-          fix-physics
-          moving="speed: 0.7"
-          geometry="primitive: box; height: 4.5; width: 20; depth: 2.5; translate: 0 2.25 0">
-        </a-mixin>
+
+        <img id="hud-intro" src="static/images/intro.png" />
+        <img id="hud-instructions" src="static/images/instructions.png" />
+        <img id="hud-dead" src="static/images/dead.png" />
+        <img id="hud-win" src="static/images/win.png" />
       </a-assets>
 
-      <a-box
-        opacity="0"
-        dynamic-body
-        jumper="using: #camera"
-        keyboard-controls
-        touch-controls
-        height="1.5"
-        position="0 1.5 10">
-        <a-camera id="camera"></a-camera>
-      </a-box>
+      <a-entity light="type: hemisphere; color: #7EC6FF; groundColor: #FF9CB6; intensity: 0.3"></a-entity>
+      <a-entity light="type: point; color: #7EC6FF; intensity: 0.7; decay: 0" position="-100 100 -100"></a-entity>
+      <a-entity light="type: point; color: #FF9CB6; intensity: 0.7; decay: 0" position="100 100 100"></a-entity>
 
-      <a-entity mixin="sky"></a-entity>
 
-      <a-entity mixin="grass ground"></a-entity>
-      <a-entity mixin="greener-grass hill" position="0 0 -20"></a-entity>
-      <a-entity mixin="grass hill" position="0 0 20"></a-entity>
-      <a-entity mixin="asphalt road"></a-entity>
+      <!-- ground -->
+      <a-entity
+        collada-model="#model-landscape"
+        fix-material
+        mixin="color"
+        position="0 0 0"
+        rotation="0 90 0">
+      </a-entity>
+      <a-box mixin="wall" position="0 -50 0" width="100" depth="100" height="100"></a-box>
 
-      <a-entity position="-50 0 6" spawner="mixin: car-1"></a-entity>
-      <a-entity position="0 0 4.5" mixin="yellow divider"></a-entity>
-      <a-entity position="50 0 3" rotation="0 180 0" spawner="mixin: car-2"></a-entity>
-      <a-entity position="0 0 1.5" mixin="yellow divider"></a-entity>
-      <a-entity position="-50 0 0" spawner="mixin: car-3"></a-entity>
-      <a-entity position="0 0 -1.5" mixin="yellow divider"></a-entity>
-      <a-entity position="50 0 -3" rotation="0 180 0" spawner="mixin: car-4"></a-entity>
-      <a-entity position="0 0 -4.5" mixin="yellow divider"></a-entity>
-      <a-entity position="-50 0 -6" spawner="mixin: car-5"></a-entity>
+      <!-- hill walls -->
+      <a-box mixin="wall" position="0 0 -25" height="100" width="100" depth="10" goal></a-box>
+      <a-box mixin="wall" position="-40 0 -39" height="100" width="10" depth="50"></a-box>
+      <a-box mixin="wall" position="40 0 -39" height="100" width="10" depth="50"></a-box>
+
+      <!-- city walls -->
+      <a-box mixin="wall" position="-30 0 39" height="100" width="10" depth="50"></a-box>
+      <a-box mixin="wall" position="-27 0 43" height="100" width="50" depth="50"></a-box>
+      <a-box mixin="wall" position="0 0 48" height="100" width="50" depth="50"></a-box>
+      <a-box mixin="wall" position="33 0 43" height="100" width="50" depth="50"></a-box>
+      <a-box mixin="wall" position="30 0 39" height="100" width="10" depth="50"></a-box>
+
+      <!-- player -->
+      <a-player>
+        <a-entity camera="near: 0.1" look-controls>
+          <a-hud></a-hud>
+        </a-entity>
+      </a-player>
+
+      <!-- car spawners -->
+      <a-entity
+        position="-50 0 10.5"
+        rotation="0 90 0"
+        spawner="mixin: color car tractor; timeout: 6000">
+      </a-entity>
+      <a-entity
+        position="50 0 5"
+        rotation="0 -90 0"
+        spawner="mixin: color car sedan; timeout: 8000">
+      </a-entity>
+      <a-entity
+        position="-50 0 0"
+        rotation="0 90 0"
+        spawner="mixin: color car light-rail; timeout: 5000">
+      </a-entity>
+      <a-entity
+        position="50 0 -5"
+        rotation="0 -90 0"
+        spawner="mixin: color car freighter; timeout: 9000">
+      </a-entity>
+      <a-entity
+        position="-50 0 -10.5"
+        rotation="0 90 0"
+        spawner="mixin: color car racecar; timeout: 7000">
+      </a-entity>
     </a-scene>
   </body>
 </html>
