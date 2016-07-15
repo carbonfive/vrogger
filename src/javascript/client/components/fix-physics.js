@@ -31,6 +31,7 @@ export default class FixPhysics extends Component {
   fixGeometry() {
     const geometry = this.el.components.geometry;
     if (!geometry) return;
+    geometry.remove = () => {};
 
     const position = this.getVector('position');
 
