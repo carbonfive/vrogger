@@ -28,7 +28,7 @@ export default class Game extends System {
     this.spawners = Array.prototype.slice.call(document.querySelectorAll('[spawner]'), 0);
 
     this.sceneEl.addEventListener('loaded', () => {
-      this.setState(Game.State.INTRO);
+      setTimeout(() => this.setState(Game.State.INTRO), 10);
     });
 
     this.player.addEventListener('vehicle-hit', () => {
@@ -45,6 +45,7 @@ export default class Game extends System {
 
     switch(state) {
       case Game.State.INTRO: {
+        this.resetPlayer();
         this.setHud('#hud-intro');
         this.onNext(() => this.setState(Game.State.READY));
         break;
@@ -101,8 +102,7 @@ export default class Game extends System {
     setProperty(this.player, 'jumper', 'enabled', true);
     setProperty(this.spawners, 'spawner', 'enabled', true);
 
-    this.player.body.position.copy({x: 0, y: 1, z: 12});
-    this.player.body.velocity.copy({x: 0, y: 0, z: 0});
+    this.resetPlayer();
   }
 
   stopGame() {
@@ -114,6 +114,11 @@ export default class Game extends System {
     if (!src) return this.hud.setAttribute('visible', 'false');
     this.hud.setAttribute('src', src);
     this.hud.setAttribute('visible', 'true');
+  }
+
+  resetPlayer() {
+    this.player.body.position.copy({x: 0, y: 1, z: 17});
+    this.player.body.velocity.copy({x: 0, y: 0, z: 0});
   }
 }
 

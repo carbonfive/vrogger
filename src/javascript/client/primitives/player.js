@@ -15,7 +15,10 @@ export default class Player extends Primitive {
       primitive: 'box',
       height: 2,
       width: 1,
-    }
+    },
+    material: {
+      opacity: 0,
+    },
   }
 
   static mappings = {
