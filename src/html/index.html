@@ -23,35 +23,35 @@
         </a-mixin>
         <a-mixin
           id="car-1"
-          vehicle="speed: 30"
+          vehicle="speed: 20"
           obj-model="obj: #sedan"
           transform-model="translate: 10.75 -2 -4"
           geometry="primitive: box; height: 3; width: 3.5; depth: 8.5; translate: 0 1.5 0">
         </a-mixin>
         <a-mixin
           id="car-2"
-          vehicle="speed: 20"
+          vehicle="speed: 14"
           obj-model="obj: #light-rail"
           transform-model="translate: 0 -2 6.5"
           geometry="primitive: box; height: 4; width: 3.5; depth: 32; translate: 0 2 0">
         </a-mixin>
         <a-mixin
           id="car-3"
-          vehicle="speed: 35"
+          vehicle="speed: 22"
           obj-model="obj: #sedan"
           transform-model="translate: 10.75 -2 -4"
           geometry="primitive: box; height: 3; width: 3.5; depth: 8.5; translate: 0 1.5 0">
         </a-mixin>
         <a-mixin
           id="car-4"
-          vehicle="speed: 50"
+          vehicle="speed: 38"
           obj-model="obj: #racecar"
           transform-model="translate: -5.25 -1.25 2; rotation: 0 180 0"
           geometry="primitive: box; height: 2; width: 4; depth: 9.5; translate: 0 1 0">
         </a-mixin>
         <a-mixin
           id="car-5"
-          vehicle="speed: 40"
+          vehicle="speed: 30"
           obj-model="obj: #freighter"
           transform-model="translate: -5 -2.5 -4"
           geometry="primitive: box; height: 4.5; width: 3; depth: 14; translate: 0 2.25 0">
@@ -106,27 +106,27 @@
       <a-entity
         position="-50 0 10.5"
         rotation="0 90 0"
-        spawner="mixin: color car car-1">
+        spawner="mixin: color car car-1; timeout: 6000">
       </a-entity>
       <a-entity
         position="50 0 5"
         rotation="0 -90 0"
-        spawner="mixin: color car car-2">
+        spawner="mixin: color car car-2; timeout: 8000">
       </a-entity>
       <a-entity
         position="-50 0 0"
         rotation="0 90 0"
-        spawner="mixin: color car car-3">
+        spawner="mixin: color car car-3; timeout: 5000">
       </a-entity>
       <a-entity
         position="50 0 -5"
         rotation="0 -90 0"
-        spawner="mixin: color car car-4">
+        spawner="mixin: color car car-4; timeout: 9000">
       </a-entity>
       <a-entity
         position="-50 0 -10.5"
         rotation="0 90 0"
-        spawner="mixin: color car car-5">
+        spawner="mixin: color car car-5; timeout: 7000">
       </a-entity>
     </a-scene>
   </body>
