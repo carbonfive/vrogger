@@ -83651,14 +83651,23 @@
 	          {
 	            this.setHud('#hud-dead');
 	            this.stopGame();
-	            this.onNext(function () {
-	              return _this3.setState(Game.State.ALIVE);
-	            });
+	            setTimeout(function () {
+	              return _this3.setState(Game.State.REPLAY);
+	            }, 3000);
 	            break;
 	          }
 	        case Game.State.WIN:
 	          {
 	            this.setHud('#hud-win');
+	            this.stopGame();
+	            setTimeout(function () {
+	              return _this3.setState(Game.State.REPLAY);
+	            }, 3000);
+	            break;
+	          }
+	        case Game.State.REPLAY:
+	          {
+	            this.setHud('#hud-replay');
 	            this.stopGame();
 	            this.onNext(function () {
 	              return _this3.setState(Game.State.ALIVE);
@@ -83707,6 +83716,7 @@
 	    value: function stopGame() {
 	      setProperty(this.player, 'jumper', 'enabled', false);
 	      setProperty(this.spawners, 'spawner', 'enabled', false);
+	      this.player.body.type = CANNON.Body.STATIC;
 	    }
 	  }, {
 	    key: 'setHud',
@@ -83720,6 +83730,7 @@
 	    value: function resetPlayer() {
 	      this.player.body.position.copy({ x: 0, y: 1, z: 17 });
 	      this.player.body.velocity.copy({ x: 0, y: 0, z: 0 });
+	      this.player.body.type = CANNON.Body.DYNAMIC;
 	    }
 	  }]);
 	
@@ -83731,7 +83742,8 @@
 	  READY: 1,
 	  ALIVE: 2,
 	  DEAD: 3,
-	  WIN: 4
+	  WIN: 4,
+	  REPLAY: 5
 	};
 	exports.default = Game;
 	
