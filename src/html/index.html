@@ -61,6 +61,11 @@
           rotation="-90 0 0"
           geometry="primitive: plane; height: 0.1; width: 100; translate: 0 0 0.2">
         </a-mixin>
+
+        <img id="hud-intro" src="static/images/intro.png" />
+        <img id="hud-instructions" src="static/images/instructions.png" />
+        <img id="hud-dead" src="static/images/dead.png" />
+        <img id="hud-win" src="static/images/win.png" />
       </a-assets>
 
       <a-sky color="#7EC0EE"></a-sky>
@@ -78,13 +83,16 @@
         mixin="grass hill">
       </a-entity>
       <a-entity
+        goal
         position="0 0 -20"
         mixin="greener-grass hill">
       </a-entity>
       <a-entity mixin="asphalt road"></a-entity>
 
       <a-player position="0 2 12">
-        <a-entity camera look-controls></a-entity>
+        <a-entity camera="near: 0.1" look-controls>
+          <a-hud></a-hud>
+        </a-entity>
       </a-player>
 
       <a-entity

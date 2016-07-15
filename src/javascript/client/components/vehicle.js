@@ -47,7 +47,7 @@ export default class Vehicle extends Component {
 
     if (body.mass == 0) return;
 
-    body.el.emit('killed', event);
+    body.el.emit('vehicle-hit', event);
   }
 }
 
