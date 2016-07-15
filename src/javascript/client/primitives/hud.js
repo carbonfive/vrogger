@@ -14,6 +14,7 @@ export default class Hud extends Primitive {
     },
     material: {
       transparent: true,
+      shader: 'flat',
     },
     visible: false,
   };
