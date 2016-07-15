@@ -9,52 +9,54 @@
       <a-assets>
         <a-mixin id="color" material="color: #FFFFFF; metalness: 0; roughness: 0.9"></a-mixin>
 
-        <a-asset-item id="landscape" src="/static/models/landscape.dae"></a-asset-item>
-        <a-asset-item id="sedan" src="/static/models/sedan.obj"></a-asset-item>
-        <a-asset-item id="light-rail" src="/static/models/light-rail.obj"></a-asset-item>
-        <a-asset-item id="racecar" src="/static/models/racecar.obj"></a-asset-item>
-        <a-asset-item id="freighter" src="/static/models/freighter.obj"></a-asset-item>
+        <a-asset-item id="model-landscape" src="/static/models/landscape.dae"></a-asset-item>
+        <a-asset-item id="model-tractor" src="/static/models/tractor.dae"></a-asset-item>
+        <a-asset-item id="model-sedan" src="/static/models/sedan.dae"></a-asset-item>
+        <a-asset-item id="model-light-rail" src="/static/models/light-rail.dae"></a-asset-item>
+        <a-asset-item id="model-freighter" src="/static/models/freighter.dae"></a-asset-item>
+        <a-asset-item id="model-racecar" src="/static/models/racecar.dae"></a-asset-item>
 
         <a-mixin
           id="car"
           dynamic-body="mass: 1000"
           fixed-rotation
-          fix-physics>
+          fix-physics
+          fix-material>
         </a-mixin>
         <a-mixin
-          id="car-1"
+          id="tractor"
+          vehicle="speed: 10"
+          collada-model="#model-tractor"
+          transform-model="translate: -10.75 -2.75 -3"
+          geometry="primitive: box; height: 5; width: 3.5; depth: 5.5; translate: 0 2.5 0">
+        </a-mixin>
+        <a-mixin
+          id="sedan"
           vehicle="speed: 20"
-          obj-model="obj: #sedan"
-          transform-model="translate: 10.75 -2 -4"
+          collada-model="#model-sedan"
+          transform-model="translate: -10.75 -1.6 4; rotation: 0 180 0"
           geometry="primitive: box; height: 3; width: 3.5; depth: 8.5; translate: 0 1.5 0">
         </a-mixin>
         <a-mixin
-          id="car-2"
+          id="light-rail"
           vehicle="speed: 14"
-          obj-model="obj: #light-rail"
+          collada-model="#model-light-rail"
           transform-model="translate: 0 -2 6.5"
           geometry="primitive: box; height: 4; width: 3.5; depth: 32; translate: 0 2 0">
         </a-mixin>
         <a-mixin
-          id="car-3"
-          vehicle="speed: 22"
-          obj-model="obj: #sedan"
-          transform-model="translate: 10.75 -2 -4"
-          geometry="primitive: box; height: 3; width: 3.5; depth: 8.5; translate: 0 1.5 0">
-        </a-mixin>
-        <a-mixin
-          id="car-4"
-          vehicle="speed: 38"
-          obj-model="obj: #racecar"
-          transform-model="translate: -5.25 -1.25 2; rotation: 0 180 0"
-          geometry="primitive: box; height: 2; width: 4; depth: 9.5; translate: 0 1 0">
-        </a-mixin>
-        <a-mixin
-          id="car-5"
+          id="freighter"
           vehicle="speed: 30"
-          obj-model="obj: #freighter"
+          collada-model="#model-freighter"
           transform-model="translate: -5 -2.5 -4"
           geometry="primitive: box; height: 4.5; width: 3; depth: 14; translate: 0 2.25 0">
+        </a-mixin>
+        <a-mixin
+          id="racecar"
+          vehicle="speed: 38"
+          collada-model="#model-racecar"
+          transform-model="translate: -5.25 -1.25 2; rotation: 0 180 0"
+          geometry="primitive: box; height: 2; width: 4; depth: 9.5; translate: 0 1 0">
         </a-mixin>
 
         <a-mixin
@@ -76,7 +78,8 @@
 
       <!-- ground -->
       <a-entity
-        collada-model="#landscape"
+        collada-model="#model-landscape"
+        fix-material
         mixin="color"
         position="0 0 0"
         rotation="0 90 0">
@@ -106,27 +109,27 @@
       <a-entity
         position="-50 0 10.5"
         rotation="0 90 0"
-        spawner="mixin: color car car-1; timeout: 6000">
+        spawner="mixin: color car tractor; timeout: 6000">
       </a-entity>
       <a-entity
         position="50 0 5"
         rotation="0 -90 0"
-        spawner="mixin: color car car-2; timeout: 8000">
+        spawner="mixin: color car sedan; timeout: 8000">
       </a-entity>
       <a-entity
         position="-50 0 0"
         rotation="0 90 0"
-        spawner="mixin: color car car-3; timeout: 5000">
+        spawner="mixin: color car light-rail; timeout: 5000">
       </a-entity>
       <a-entity
         position="50 0 -5"
         rotation="0 -90 0"
-        spawner="mixin: color car car-4; timeout: 9000">
+        spawner="mixin: color car freighter; timeout: 9000">
       </a-entity>
       <a-entity
         position="-50 0 -10.5"
         rotation="0 90 0"
-        spawner="mixin: color car car-5; timeout: 7000">
+        spawner="mixin: color car racecar; timeout: 7000">
       </a-entity>
     </a-scene>
   </body>
