@@ -20,6 +20,7 @@ export default class Game extends System {
     ALIVE: 2,
     DEAD: 3,
     WIN: 4,
+    REPLAY: 5,
   }
 
   init() {
@@ -63,11 +64,17 @@ export default class Game extends System {
       case Game.State.DEAD: {
         this.setHud('#hud-dead');
         this.stopGame();
-        this.onNext(() => this.setState(Game.State.ALIVE));
+        setTimeout(() => this.setState(Game.State.REPLAY), 3000);
         break;
       }
       case Game.State.WIN: {
         this.setHud('#hud-win');
+        this.stopGame();
+        setTimeout(() => this.setState(Game.State.REPLAY), 3000);
+        break;
+      }
+      case Game.State.REPLAY: {
+        this.setHud('#hud-replay');
         this.stopGame();
         this.onNext(() => this.setState(Game.State.ALIVE));
         break;
@@ -108,6 +115,7 @@ export default class Game extends System {
   stopGame() {
     setProperty(this.player, 'jumper', 'enabled', false);
     setProperty(this.spawners, 'spawner', 'enabled', false);
+    this.player.body.type = CANNON.Body.STATIC;
   }
 
   setHud(src) {
@@ -119,6 +127,7 @@ export default class Game extends System {
   resetPlayer() {
     this.player.body.position.copy({x: 0, y: 1, z: 17});
     this.player.body.velocity.copy({x: 0, y: 0, z: 0});
+    this.player.body.type = CANNON.Body.DYNAMIC;
   }
 }
 
