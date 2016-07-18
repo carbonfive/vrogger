@@ -82919,6 +82919,9 @@
 	      this.body = null;
 	
 	      this.initEvents();
+	
+	      this.hopSound = document.getElementById("audio-hop");
+	      this.hopSound.volume = 0.1;
 	    }
 	  }, {
 	    key: 'remove',
@@ -82972,6 +82975,7 @@
 	    key: 'executeJump',
 	    value: function executeJump(event) {
 	      if (this.canJump() != true) return;
+	      this.hopSound.play();
 	      this.isCharging = false;
 	
 	      var time = event.timeStamp - this.event.timeStamp;
@@ -83615,6 +83619,15 @@
 	      this.player.addEventListener('goal-hit', function () {
 	        _this2.setState(Game.State.WIN);
 	      });
+	
+	      this.winSound = document.getElementById("audio-win");
+	      this.winSound.volume = 0.2;
+	      this.loseSound = document.getElementById("audio-lose");
+	      this.loseSound.volume = 0.2;
+	      this.bgm = document.getElementById("audio-bgm");
+	      this.bgm.volume = 0.05;
+	      this.bgm.loop = true;
+	      this.bgm.play();
 	    }
 	  }, {
 	    key: 'setState',
@@ -83650,6 +83663,7 @@
 	        case Game.State.DEAD:
 	          {
 	            this.setHud('#hud-dead');
+	            this.playLoseSound();
 	            this.stopGame();
 	            setTimeout(function () {
 	              return _this3.setState(Game.State.REPLAY);
@@ -83659,6 +83673,7 @@
 	        case Game.State.WIN:
 	          {
 	            this.setHud('#hud-win');
+	            this.playWinSound();
 	            this.stopGame();
 	            setTimeout(function () {
 	              return _this3.setState(Game.State.REPLAY);
@@ -83710,6 +83725,16 @@
 	      setProperty(this.spawners, 'spawner', 'enabled', true);
 	
 	      this.resetPlayer();
+	    }
+	  }, {
+	    key: 'playWinSound',
+	    value: function playWinSound() {
+	      this.winSound.play();
+	    }
+	  }, {
+	    key: 'playLoseSound',
+	    value: function playLoseSound() {
+	      this.loseSound.play();
 	    }
 	  }, {
 	    key: 'stopGame',
