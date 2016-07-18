@@ -39,6 +39,13 @@ export default class Game extends System {
     this.player.addEventListener('goal-hit', () => {
       this.setState(Game.State.WIN);
     });
+
+    this.winSound = document.getElementById("audio-win");
+    this.loseSound = document.getElementById("audio-lose");
+    this.bgm = document.getElementById("audio-bgm");
+    this.bgm.volume = 0.01;
+    this.bgm.loop = true;
+    this.bgm.play()
   }
 
   setState(state) {
@@ -63,12 +70,14 @@ export default class Game extends System {
       }
       case Game.State.DEAD: {
         this.setHud('#hud-dead');
+        this.playLoseSound();
         this.stopGame();
         setTimeout(() => this.setState(Game.State.REPLAY), 3000);
         break;
       }
       case Game.State.WIN: {
         this.setHud('#hud-win');
+        this.playWinSound();
         this.stopGame();
         setTimeout(() => this.setState(Game.State.REPLAY), 3000);
         break;
@@ -110,6 +119,14 @@ export default class Game extends System {
     setProperty(this.spawners, 'spawner', 'enabled', true);
 
     this.resetPlayer();
+  }
+
+  playWinSound() {
+    this.winSound.play();
+  }
+
+  playLoseSound() {
+    this.loseSound.play();
   }
 
   stopGame() {

@@ -7,6 +7,12 @@
   <body>
     <a-scene fog="type: linear; color: #FFFFFF; far: 70; near: 0">
       <a-assets>
+        <!--<audio id="car" src="static/audio/car-passing.wav">-->
+        <audio src="static/audio/light-rail.mp3"></audio>
+        <audio id="audio-bgm" src="static/audio/bgm.mp3"></audio>
+        <audio id="audio-win" src="static/audio/win.wav"></audio>
+        <audio id="audio-lose" src="static/audio/lose.wav"></audio>
+        <audio id="audio-hop" src="static/audio/hop.wav"></audio>
         <a-mixin id="color" material="color: #FFFFFF; metalness: 0; roughness: 0.9"></a-mixin>
 
         <a-asset-item id="model-landscape" src="static/models/landscape.dae"></a-asset-item>
@@ -19,6 +25,7 @@
         <a-mixin
           id="car"
           dynamic-body="mass: 1000"
+          sound="src: static/audio/light-rail.mp3; autoplay: true; loop: true"
           fixed-rotation
           fix-physics
           fix-material>

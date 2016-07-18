@@ -26,6 +26,8 @@ export default class Jumper extends Component {
     this.body = null;
 
     this.initEvents();
+
+    this.hopSound = document.getElementById("audio-hop");
   }
 
   remove() {
@@ -59,6 +61,7 @@ export default class Jumper extends Component {
 
   executeJump(event) {
     if (this.canJump() != true) return;
+    this.hopSound.play();
     this.isCharging = false;
 
     const time = event.timeStamp - this.event.timeStamp;
