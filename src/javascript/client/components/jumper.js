@@ -28,6 +28,7 @@ export default class Jumper extends Component {
     this.initEvents();
 
     this.hopSound = document.getElementById("audio-hop");
+    this.hopSound.volume = 0.1;
   }
 
   remove() {

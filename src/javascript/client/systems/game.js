@@ -41,9 +41,11 @@ export default class Game extends System {
     });
 
     this.winSound = document.getElementById("audio-win");
+    this.winSound.volume = 0.2;
     this.loseSound = document.getElementById("audio-lose");
+    this.loseSound.volume = 0.2;
     this.bgm = document.getElementById("audio-bgm");
-    this.bgm.volume = 0.01;
+    this.bgm.volume = 0.05;
     this.bgm.loop = true;
     this.bgm.play()
   }
