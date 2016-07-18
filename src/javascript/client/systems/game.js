@@ -135,6 +135,7 @@ export default class Game extends System {
     setProperty(this.player, 'jumper', 'enabled', false);
     setProperty(this.spawners, 'spawner', 'enabled', false);
     this.player.body.type = CANNON.Body.STATIC;
+    this.player.components.jumper.isCharging = false;
   }
 
   setHud(src) {
