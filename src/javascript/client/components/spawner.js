@@ -9,7 +9,15 @@ export default class Spawner extends Component {
   }
 
   init() {
-    this.timer = setInterval(() => this.spawn(), this.data.timeout);
+    this.last = 0;
+  }
+
+  tick(d) {
+    if (!d) return;
+    if (d > this.last + this.data.timeout) {
+      this.spawn();
+      this.last = d;
+    }
   }
 
   spawn() {
