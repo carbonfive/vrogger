@@ -24,13 +24,12 @@ module.exports = {
   devtool: 'source-map',
 
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/html/index.html',
-      inject: 'head',
-    }),
     new CopyWebpackPlugin([{
       from: 'src/static',
       to: 'static',
+    }, {
+      from: 'src/html',
+      to: '.',
     }]),
   ],
 };
