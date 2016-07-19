@@ -52,7 +52,7 @@ export default class Game extends System {
       setTimeout(() => this.setState(Game.State.INTRO), 10);
     });
 
-    this.player.addEventListener('vehicle-hit', () => {
+    this.player.addEventListener('death', () => {
       this.setState(Game.State.DEAD);
     });
 

@@ -14,8 +14,6 @@ export default class Vehicle extends Component {
     else {
       this.el.addEventListener('body-loaded', e => this.initBody(e.detail.body));
     }
-
-    this.el.addEventListener('collide', e => this.onCollide(e));
   }
 
   initBody(body) {
@@ -40,14 +38,6 @@ export default class Vehicle extends Component {
     if (Math.abs(this.body.position.x) > 50) {
       this.el.sceneEl.removeChild(this.el);
     }
-  }
-
-  onCollide(event) {
-    const body = event.detail.body;
-
-    if (body.mass == 0) return;
-
-    body.el.emit('vehicle-hit', event);
   }
 }
 

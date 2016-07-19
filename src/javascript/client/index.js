@@ -12,6 +12,7 @@ import './components/spawner';
 import './components/touch-controls';
 import './components/transform-model';
 import './components/vehicle';
+import './components/death';
 
 import './primitives/hud';
 import './primitives/player';
