@@ -12,10 +12,12 @@
         <audio src="static/audio/light-rail.mp3"></audio>
         <audio src="static/audio/freighter.mp3"></audio>
         <audio src="static/audio/racecar.mp3"></audio>
+
         <audio id="audio-bgm" src="static/audio/bgm.mp3"></audio>
         <audio id="audio-win" src="static/audio/win.mp3"></audio>
         <audio id="audio-lose" src="static/audio/lose.mp3"></audio>
         <audio id="audio-hop" src="static/audio/hop.mp3"></audio>
+
         <a-mixin id="color" material="color: #FFFFFF; metalness: 0; roughness: 0.9"></a-mixin>
 
         <a-asset-item id="model-landscape" src="static/models/landscape.dae"></a-asset-item>
@@ -83,6 +85,7 @@
         <img id="hud-instructions" src="static/images/instructions.png" />
         <img id="hud-dead" src="static/images/dead.png" />
         <img id="hud-win" src="static/images/win.png" />
+        <img id="hud-increase" src="static/images/increase.png" />
         <img id="hud-replay" src="static/images/replay.png" />
       </a-assets>
 
@@ -102,7 +105,7 @@
       <a-box mixin="wall" position="0 -50 0" width="100" depth="100" height="100"></a-box>
 
       <!-- hill walls -->
-      <a-box mixin="wall" position="0 0 -25" height="100" width="100" depth="10" goal></a-box>
+      <a-box mixin="wall" position="0 0 -20" height="100" width="100" depth="10" goal></a-box>
       <a-box mixin="wall" position="-40 0 -39" height="100" width="10" depth="50"></a-box>
       <a-box mixin="wall" position="40 0 -39" height="100" width="10" depth="50"></a-box>
 
@@ -122,26 +125,31 @@
 
       <!-- car spawners -->
       <a-entity
+        type="tractor"
         position="-50 0 10.5"
         rotation="0 90 0"
         spawner="mixin: color car tractor; timeout: 6000">
       </a-entity>
       <a-entity
+        type="sedan"
         position="50 0 5"
         rotation="0 -90 0"
         spawner="mixin: color car sedan; timeout: 8000">
       </a-entity>
       <a-entity
+        type="light-rail"
         position="-50 0 0"
         rotation="0 90 0"
         spawner="mixin: color car light-rail; timeout: 5000">
       </a-entity>
       <a-entity
+        type="freighter"
         position="50 0 -5"
         rotation="0 -90 0"
         spawner="mixin: color car freighter; timeout: 9000">
       </a-entity>
       <a-entity
+        type="racecar"
         position="-50 0 -10.5"
         rotation="0 90 0"
         spawner="mixin: color car racecar; timeout: 7000">
