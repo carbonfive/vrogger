@@ -13,6 +13,22 @@ function setProperty(object, component, property, value) {
   }
 }
 
+const VEHICLE_SPEED = {
+  tractor: 10,
+  sedan: 20,
+  train: 15,
+  freighter: 30,
+  racecar: 40,
+};
+
+const VEHICLE_FREQUENCY = {
+  tractor: 6,
+  sedan: 8,
+  train: 10,
+  freighter: 9,
+  racecar: 7,
+};
+
 export default class Game extends System {
   static State = {
     INTRO: 0,
@@ -20,13 +36,17 @@ export default class Game extends System {
     ALIVE: 2,
     DEAD: 3,
     WIN: 4,
-    REPLAY: 5,
+    INCREASE: 5,
+    REPLAY: 6,
   }
 
   init() {
     this.hud = document.querySelector('a-hud');
     this.player = document.querySelector('a-player');
     this.spawners = Array.prototype.slice.call(document.querySelectorAll('[spawner]'), 0);
+    this.vehicles = Array.prototype.slice.call(document.querySelectorAll('[vehicle]'), 0);
+
+    this.level = 0;
 
     this.sceneEl.addEventListener('loaded', () => {
       setTimeout(() => this.setState(Game.State.INTRO), 10);
@@ -47,7 +67,7 @@ export default class Game extends System {
     this.bgm = document.getElementById("audio-bgm");
     this.bgm.volume = 0.05;
     this.bgm.loop = true;
-    this.bgm.play()
+    this.bgm.play();
   }
 
   setState(state) {
@@ -55,6 +75,7 @@ export default class Game extends System {
 
     switch(state) {
       case Game.State.INTRO: {
+        this.setDifficulty(this.level);
         this.resetPlayer();
         this.setHud('#hud-intro');
         this.onNext(() => this.setState(Game.State.READY));
@@ -81,6 +102,15 @@ export default class Game extends System {
         this.setHud('#hud-win');
         this.playWinSound();
         this.stopGame();
+        this.level += 1;
+        this.setDifficulty(this.level);
+        setTimeout(() => this.setState(Game.State.INCREASE), 3000);
+        break;
+      }
+      case Game.State.INCREASE: {
+        this.setHud('#hud-increase');
+        this.level += 1;
+        this.setDifficulty(this.level);
         setTimeout(() => this.setState(Game.State.REPLAY), 3000);
         break;
       }
@@ -148,6 +178,22 @@ export default class Game extends System {
     this.player.body.position.copy({x: 0, y: 1, z: 17});
     this.player.body.velocity.copy({x: 0, y: 0, z: 0});
     this.player.body.type = CANNON.Body.DYNAMIC;
+  }
+
+  setDifficulty(level) {
+    const adjust = (1 + (0.1 * level));
+
+    this.vehicles.forEach(vehicle => {
+      const type = vehicle.id;
+      const speed = VEHICLE_SPEED[type] * adjust;
+      vehicle.setAttribute('vehicle', `speed: ${speed}`);
+    });
+
+    this.spawners.forEach(spawner => {
+      const type = spawner.getAttribute('type');
+      const frequency = VEHICLE_FREQUENCY[type] * 1000 / adjust;
+      spawner.components.spawner.data.timeout = frequency;
+    });
   }
 }
 
