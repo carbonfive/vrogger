@@ -81,11 +81,13 @@
 	
 	__webpack_require__(60);
 	
-	__webpack_require__(62);
+	__webpack_require__(61);
 	
 	__webpack_require__(63);
 	
 	__webpack_require__(64);
+	
+	__webpack_require__(65);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -83066,11 +83068,16 @@
 	  _createClass(Spawner, [{
 	    key: 'init',
 	    value: function init() {
-	      var _this2 = this;
-	
-	      this.timer = setInterval(function () {
-	        return _this2.spawn();
-	      }, this.data.timeout);
+	      this.last = 0;
+	    }
+	  }, {
+	    key: 'tick',
+	    value: function tick(d) {
+	      if (!d) return;
+	      if (d > this.last + this.data.timeout) {
+	        this.spawn();
+	        this.last = d;
+	      }
 	    }
 	  }, {
 	    key: 'spawn',
@@ -83278,10 +83285,6 @@
 	          return _this2.initBody(e.detail.body);
 	        });
 	      }
-	
-	      this.el.addEventListener('collide', function (e) {
-	        return _this2.onCollide(e);
-	      });
 	    }
 	  }, {
 	    key: 'initBody',
@@ -83309,15 +83312,6 @@
 	        this.el.sceneEl.removeChild(this.el);
 	      }
 	    }
-	  }, {
-	    key: 'onCollide',
-	    value: function onCollide(event) {
-	      var body = event.detail.body;
-	
-	      if (body.mass == 0) return;
-	
-	      body.el.emit('vehicle-hit', event);
-	    }
 	  }]);
 	
 	  return Vehicle;
@@ -83341,7 +83335,68 @@
 	  value: true
 	});
 	
-	var _primitive = __webpack_require__(61);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _component = __webpack_require__(50);
+	
+	var _component2 = _interopRequireDefault(_component);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Deadly = function (_Component) {
+	  _inherits(Deadly, _Component);
+	
+	  function Deadly() {
+	    _classCallCheck(this, Deadly);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Deadly).apply(this, arguments));
+	  }
+	
+	  _createClass(Deadly, [{
+	    key: 'init',
+	    value: function init() {
+	      var _this2 = this;
+	
+	      this.el.addEventListener('collide', function (e) {
+	        return _this2.onCollision(e);
+	      });
+	    }
+	  }, {
+	    key: 'onCollision',
+	    value: function onCollision(event) {
+	      var body = event.detail.body;
+	
+	      if (body.mass == 0) return;
+	
+	      body.el.emit('death', event);
+	    }
+	  }]);
+	
+	  return Deadly;
+	}(_component2.default);
+	
+	exports.default = Deadly;
+	
+	
+	Deadly.register();
+
+/***/ },
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _primitive = __webpack_require__(62);
 	
 	var _primitive2 = _interopRequireDefault(_primitive);
 	
@@ -83391,7 +83446,7 @@
 	Hud.register();
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -83430,7 +83485,7 @@
 	exports.default = Primitive;
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -83439,7 +83494,7 @@
 	  value: true
 	});
 	
-	var _primitive = __webpack_require__(61);
+	var _primitive = __webpack_require__(62);
 	
 	var _primitive2 = _interopRequireDefault(_primitive);
 	
@@ -83494,7 +83549,7 @@
 	Player.register();
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -83503,7 +83558,7 @@
 	  value: true
 	});
 	
-	var _primitive = __webpack_require__(61);
+	var _primitive = __webpack_require__(62);
 	
 	var _primitive2 = _interopRequireDefault(_primitive);
 	
@@ -83551,7 +83606,7 @@
 	Vehicle.register();
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -83562,7 +83617,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _system = __webpack_require__(65);
+	var _system = __webpack_require__(66);
 	
 	var _system2 = _interopRequireDefault(_system);
 	
@@ -83588,6 +83643,22 @@
 	  }
 	}
 	
+	var VEHICLE_SPEED = {
+	  tractor: 10,
+	  sedan: 20,
+	  train: 15,
+	  freighter: 30,
+	  racecar: 40
+	};
+	
+	var VEHICLE_FREQUENCY = {
+	  tractor: 6,
+	  sedan: 8,
+	  train: 10,
+	  freighter: 9,
+	  racecar: 7
+	};
+	
 	var Game = function (_System) {
 	  _inherits(Game, _System);
 	
@@ -83605,6 +83676,9 @@
 	      this.hud = document.querySelector('a-hud');
 	      this.player = document.querySelector('a-player');
 	      this.spawners = Array.prototype.slice.call(document.querySelectorAll('[spawner]'), 0);
+	      this.vehicles = Array.prototype.slice.call(document.querySelectorAll('[vehicle]'), 0);
+	
+	      this.level = 0;
 	
 	      this.sceneEl.addEventListener('loaded', function () {
 	        setTimeout(function () {
@@ -83612,7 +83686,7 @@
 	        }, 10);
 	      });
 	
-	      this.player.addEventListener('vehicle-hit', function () {
+	      this.player.addEventListener('death', function () {
 	        _this2.setState(Game.State.DEAD);
 	      });
 	
@@ -83639,6 +83713,7 @@
 	      switch (state) {
 	        case Game.State.INTRO:
 	          {
+	            this.setDifficulty(this.level);
 	            this.resetPlayer();
 	            this.setHud('#hud-intro');
 	            this.onNext(function () {
@@ -83675,6 +83750,18 @@
 	            this.setHud('#hud-win');
 	            this.playWinSound();
 	            this.stopGame();
+	            this.level += 1;
+	            this.setDifficulty(this.level);
+	            setTimeout(function () {
+	              return _this3.setState(Game.State.INCREASE);
+	            }, 3000);
+	            break;
+	          }
+	        case Game.State.INCREASE:
+	          {
+	            this.setHud('#hud-increase');
+	            this.level += 1;
+	            this.setDifficulty(this.level);
 	            setTimeout(function () {
 	              return _this3.setState(Game.State.REPLAY);
 	            }, 3000);
@@ -83742,6 +83829,7 @@
 	      setProperty(this.player, 'jumper', 'enabled', false);
 	      setProperty(this.spawners, 'spawner', 'enabled', false);
 	      this.player.body.type = CANNON.Body.STATIC;
+	      this.player.components.jumper.isCharging = false;
 	    }
 	  }, {
 	    key: 'setHud',
@@ -83757,6 +83845,23 @@
 	      this.player.body.velocity.copy({ x: 0, y: 0, z: 0 });
 	      this.player.body.type = CANNON.Body.DYNAMIC;
 	    }
+	  }, {
+	    key: 'setDifficulty',
+	    value: function setDifficulty(level) {
+	      var adjust = 1 + 0.1 * level;
+	
+	      this.vehicles.forEach(function (vehicle) {
+	        var type = vehicle.id;
+	        var speed = VEHICLE_SPEED[type] * adjust;
+	        vehicle.setAttribute('vehicle', 'speed: ' + speed);
+	      });
+	
+	      this.spawners.forEach(function (spawner) {
+	        var type = spawner.getAttribute('type');
+	        var frequency = VEHICLE_FREQUENCY[type] * 1000 / adjust;
+	        spawner.components.spawner.data.timeout = frequency;
+	      });
+	    }
 	  }]);
 	
 	  return Game;
@@ -83768,7 +83873,8 @@
 	  ALIVE: 2,
 	  DEAD: 3,
 	  WIN: 4,
-	  REPLAY: 5
+	  INCREASE: 5,
+	  REPLAY: 6
 	};
 	exports.default = Game;
 	
@@ -83776,7 +83882,7 @@
 	Game.register();
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
