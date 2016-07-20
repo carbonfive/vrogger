@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
 * {
   border: 0;
   margin: 0;
@@ -13,7 +15,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
-  font-family: Krungthep;
+  font-family: 'Source Code Pro';
+  font-weight: bold;
   font-size: 18px;
   text-shadow: 0px 0px 5px #ed1e79;
   text-align: center;
@@ -21,6 +24,7 @@ body {
 
 #logo {
   margin-bottom: 20px;
+  max-width: 100%;
 }
 
 #logo-c5 {
