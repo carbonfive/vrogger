@@ -1,6 +1,6 @@
 import Component from '../core/component';
 
-export default class Death extends Component {
+export default class Deadly extends Component {
   init() {
     this.el.addEventListener('collide', e => this.onCollision(e));
   }
@@ -14,4 +14,4 @@ export default class Death extends Component {
   }
 }
 
-Death.register();
+Deadly.register();
