@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+* {
+  border: 0;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: #240e13;
+  background-image: url(/static/images/grid-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-family: 'Source Code Pro';
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 0px 0px 5px #ed1e79;
+  text-align: center;
+}
+
+#logo {
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+
+#logo-c5 {
+  width: 80px;
+  height: auto;
+}
+
+#screenshot {
+  display: inline-block;
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+}
+
+#screenshot img {
+  width: 100%;
+  height: auto;
+}
+
+#play {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#play span {
+  background: #ed1e79;
+  display: inline-block;
+  color: white;
+  line-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -30px;
+  margin-left: -70px;
+  width: 140px;
+  height: 60px;
+  line-height: 60px;
+  text-decoration: none;
+  box-shadow: 10px 10px rgba(0, 0, 0, .4);
+}
+
+#play:hover span {
+  background: #1ecded;
+}
+
+#play:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+h2 {
+  padding: 10px 0;
+}
+
+p {
+  padding: 20px 0;
+}
+
+.credit {
+  color: #ed1e79;
+}
+
+.link {
+  color: white;
+  display: block;
+  padding-bottom: 20px;
+  text-decoration: none;
+}
