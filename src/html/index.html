@@ -9,7 +9,7 @@
       <a-assets>
         <audio src="static/audio/tractor.mp3"></audio>
         <audio src="static/audio/sedan.mp3"></audio>
-        <audio src="static/audio/light-rail.mp3"></audio>
+        <audio src="static/audio/train.mp3"></audio>
         <audio src="static/audio/freighter.mp3"></audio>
         <audio src="static/audio/racecar.mp3"></audio>
 
@@ -23,7 +23,7 @@
         <a-asset-item id="model-landscape" src="static/models/landscape.dae"></a-asset-item>
         <a-asset-item id="model-tractor" src="static/models/tractor.dae"></a-asset-item>
         <a-asset-item id="model-sedan" src="static/models/sedan.dae"></a-asset-item>
-        <a-asset-item id="model-light-rail" src="static/models/light-rail.dae"></a-asset-item>
+        <a-asset-item id="model-train" src="static/models/train.dae"></a-asset-item>
         <a-asset-item id="model-freighter" src="static/models/freighter.dae"></a-asset-item>
         <a-asset-item id="model-racecar" src="static/models/racecar.dae"></a-asset-item>
 
@@ -51,10 +51,10 @@
           geometry="primitive: box; height: 3; width: 3.5; depth: 8.5; translate: 0 1.5 0">
         </a-mixin>
         <a-mixin
-          id="light-rail"
-          sound="src: static/audio/light-rail.mp3; autoplay: true; loop: true"
+          id="train"
+          sound="src: static/audio/train.mp3; autoplay: true; loop: true"
           vehicle="speed: 14"
-          collada-model="#model-light-rail"
+          collada-model="#model-train"
           transform-model="translate: 0 -2 6.5"
           geometry="primitive: box; height: 4; width: 3.5; depth: 32; translate: 0 2 0">
         </a-mixin>
@@ -137,10 +137,10 @@
         spawner="mixin: color car sedan; timeout: 8000">
       </a-entity>
       <a-entity
-        type="light-rail"
+        type="train"
         position="-50 0 0"
         rotation="0 90 0"
-        spawner="mixin: color car light-rail; timeout: 5000">
+        spawner="mixin: color car train; timeout: 5000">
       </a-entity>
       <a-entity
         type="freighter"

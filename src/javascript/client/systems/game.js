@@ -16,7 +16,7 @@ function setProperty(object, component, property, value) {
 const VEHICLE_SPEED = {
   tractor: 10,
   sedan: 20,
-  'light-rail': 15,
+  train: 15,
   freighter: 30,
   racecar: 40,
 };
@@ -24,7 +24,7 @@ const VEHICLE_SPEED = {
 const VEHICLE_FREQUENCY = {
   tractor: 6,
   sedan: 8,
-  'light-rail': 10,
+  train: 10,
   freighter: 9,
   racecar: 7,
 };
