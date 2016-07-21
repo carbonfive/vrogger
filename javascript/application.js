@@ -83713,7 +83713,6 @@
 	      switch (state) {
 	        case Game.State.INTRO:
 	          {
-	            this.setDifficulty(this.level);
 	            this.resetPlayer();
 	            this.setHud('#hud-intro');
 	            this.onNext(function () {
@@ -83751,7 +83750,6 @@
 	            this.playWinSound();
 	            this.stopGame();
 	            this.level += 1;
-	            this.setDifficulty(this.level);
 	            setTimeout(function () {
 	              return _this3.setState(Game.State.INCREASE);
 	            }, 3000);
@@ -83761,7 +83759,6 @@
 	          {
 	            this.setHud('#hud-increase');
 	            this.level += 1;
-	            this.setDifficulty(this.level);
 	            setTimeout(function () {
 	              return _this3.setState(Game.State.REPLAY);
 	            }, 3000);
@@ -83808,6 +83805,7 @@
 	  }, {
 	    key: 'startGame',
 	    value: function startGame() {
+	      this.setDifficulty(this.level);
 	      setProperty(this.player, 'jumper', 'enabled', true);
 	      setProperty(this.spawners, 'spawner', 'enabled', true);
 	
