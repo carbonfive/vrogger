@@ -75,7 +75,6 @@ export default class Game extends System {
 
     switch(state) {
       case Game.State.INTRO: {
-        this.setDifficulty(this.level);
         this.resetPlayer();
         this.setHud('#hud-intro');
         this.onNext(() => this.setState(Game.State.READY));
@@ -103,14 +102,12 @@ export default class Game extends System {
         this.playWinSound();
         this.stopGame();
         this.level += 1;
-        this.setDifficulty(this.level);
         setTimeout(() => this.setState(Game.State.INCREASE), 3000);
         break;
       }
       case Game.State.INCREASE: {
         this.setHud('#hud-increase');
         this.level += 1;
-        this.setDifficulty(this.level);
         setTimeout(() => this.setState(Game.State.REPLAY), 3000);
         break;
       }
@@ -147,6 +144,7 @@ export default class Game extends System {
   }
 
   startGame() {
+    this.setDifficulty(this.level);
     setProperty(this.player, 'jumper', 'enabled', true);
     setProperty(this.spawners, 'spawner', 'enabled', true);
 

@@ -29,6 +29,7 @@
         <a-mixin
           id="car"
           dynamic-body="mass: 1000"
+          deadly
           fixed-rotation
           fix-physics
           fix-material>
@@ -123,26 +124,31 @@
 
       <!-- car spawners -->
       <a-entity
+        type="tractor"
         position="-50 0 10.5"
         rotation="0 90 0"
         spawner="mixin: color car tractor; timeout: 6000">
       </a-entity>
       <a-entity
+        type="sedan"
         position="50 0 5"
         rotation="0 -90 0"
         spawner="mixin: color car sedan; timeout: 8000">
       </a-entity>
       <a-entity
+        type="train"
         position="-50 0 0"
         rotation="0 90 0"
         spawner="mixin: color car train; timeout: 5000">
       </a-entity>
       <a-entity
+        type="freighter"
         position="50 0 -5"
         rotation="0 -90 0"
         spawner="mixin: color car freighter; timeout: 9000">
       </a-entity>
       <a-entity
+        type="racecar"
         position="-50 0 -10.5"
         rotation="0 90 0"
         spawner="mixin: color car racecar; timeout: 7000">
