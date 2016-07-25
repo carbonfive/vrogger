@@ -72,11 +72,14 @@ export default class Jumper extends Component {
     const element = using == 'this' ? this.el : document.querySelector(using);
     const object = element.object3D;
 
-    const force = new THREE.Vector3(0, 1000, 0);
+    const force = new THREE.Vector3(0, 3, 0);
     force.applyQuaternion(object.quaternion);
     force.multiplyScalar(power);
 
-    this.body.applyLocalForce(force, new CANNON.Vec3);
+    const velocity = new CANNON.Vec3;
+    velocity.copy(force);
+
+    this.body.velocity = velocity;
   }
 
   canJump() {
